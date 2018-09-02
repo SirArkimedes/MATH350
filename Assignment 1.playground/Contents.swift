@@ -1,7 +1,7 @@
 import Foundation
 
-let lowerBound = 2.0
-let upperBound = 10.0
+let lowerBound = 0.5
+let upperBound = 4.5
 
 let n = Int((5 * log((upperBound - lowerBound) * 10)) / log(2)) + 1
 
@@ -25,20 +25,24 @@ func run(leftPoint: Double, leftValue: Double, rightPoint: Double, rightValue: D
     let mid = midPoint(of: leftPoint, and: rightPoint)
     let midValue = valueFromFunction(of: mid)
     print("Relative Error: \((rightPoint - leftPoint) / leftPoint), interation: \(iterations)")
+    print("Absolute Error: \(Decimal(rightPoint - leftPoint) / pow(Decimal(2), iterations))")
 
     // Check to see if we have a f(x) = 0 OR if our iterations run over the max amount of iterations.
     if leftValue == 0 {
         print()
         print("Left bound is a root: \(leftPoint)")
         print("Left point value: \(leftValue)")
+        print()
     } else if rightValue == 0 {
         print()
         print("Right bound is a root: \(rightPoint)")
         print("Right point value: \(rightValue)")
+        print()
     } else if midValue == 0 || iterations >= n {
         print()
         print("Last point computed: \(mid)")
         print("Last point value: \(midValue)")
+        print()
     } else {
         // Split the intervals in to more than one cycle if we have both positive/negative signs.
         if (leftValue > 0 && rightValue > 0) || (leftValue < 0 && rightValue < 0) {
