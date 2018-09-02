@@ -20,28 +20,47 @@ func naturalLog(of x: Double) -> Double {
     return log(x) / log(exp(1))
 }
 
+// Create a "to the power" operator.
+precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
+infix operator ^^ : PowerPrecedence
+func ^^ (radix: Int, power: Int) -> Int {
+    return Int(pow(Double(radix), Double(power)))
+}
+
+// Extend double to handle rounding.
+extension Double {
+    func round(toDecimalPlaces: Int) -> Double {
+        return (self * Double(10 ^^ toDecimalPlaces)).rounded() / Double(10 ^^ toDecimalPlaces)
+    }
+}
+
 func run(leftPoint: Double, leftValue: Double, rightPoint: Double, rightValue: Double, iterations: Int) {
     // Calculate mid point and its value.
     let mid = midPoint(of: leftPoint, and: rightPoint)
     let midValue = valueFromFunction(of: mid)
-    print("Relative Error: \((rightPoint - leftPoint) / leftPoint), interation: \(iterations)")
-    print("Absolute Error: \(Decimal(rightPoint - leftPoint) / pow(Decimal(2), iterations))")
+
+    // Print Errors
+    let relError = (rightPoint - leftPoint) / leftPoint
+    print("Relative Error: \(relError.round(toDecimalPlaces: 5)), interation: \(iterations)")
+
+    let absError = (rightPoint - leftPoint) / Double(2 ^^ iterations)
+    print("Absolute Error: \(absError.round(toDecimalPlaces: 5))")
 
     // Check to see if we have a f(x) = 0 OR if our iterations run over the max amount of iterations.
     if leftValue == 0 {
         print()
-        print("Left bound is a root: \(leftPoint)")
-        print("Left point value: \(leftValue)")
+        print("Left bound is a root: \(leftPoint.round(toDecimalPlaces: 5))")
+        print("Left point value: \(leftValue.round(toDecimalPlaces: 5))")
         print()
     } else if rightValue == 0 {
         print()
-        print("Right bound is a root: \(rightPoint)")
-        print("Right point value: \(rightValue)")
+        print("Right bound is a root: \(rightPoint.round(toDecimalPlaces: 5))")
+        print("Right point value: \(rightValue.round(toDecimalPlaces: 5))")
         print()
     } else if midValue == 0 || iterations >= n {
         print()
-        print("Last point computed: \(mid)")
-        print("Last point value: \(midValue)")
+        print("Last point computed: \(mid.round(toDecimalPlaces: 5))")
+        print("Last point value: \(midValue.round(toDecimalPlaces: 5))")
         print()
     } else {
         // Split the intervals in to more than one cycle if we have both positive/negative signs.
