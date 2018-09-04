@@ -46,7 +46,7 @@ func run(leftPoint: Double, leftValue: Double, rightPoint: Double, rightValue: D
 
     // Print Errors
     let relError = (rightPoint - leftPoint) / leftPoint
-    print("Relative Error: \(relError.round(toDecimalPlaces: 5)), interation: \(iterations)")
+    print("Relative Error: \(relError.round(toDecimalPlaces: 5)), iteration: \(iterations)")
 
     let absError = (rightPoint - leftPoint) / Double(2 ^^ iterations)
     print("Absolute Error: \(absError.round(toDecimalPlaces: 5))")
