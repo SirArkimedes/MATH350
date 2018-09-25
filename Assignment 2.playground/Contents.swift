@@ -39,7 +39,7 @@ func run(for xi: Double, iteration: Int) {
     print()
     print("Current xi: \(String(format: "%F", xi)), Last value: \(String(format: "%F", lastXValue)), Iteration: \(iteration)")
     if lastXValue.round(toDecimalPlaces: 6) == xi.round(toDecimalPlaces: 6) {
-        print("Last two values were equal, with rounding! This took \(iteration) iterations.")
+        print("Last two values were equal, with rounding! This took \(iteration - 1) iterations.")
         return
     } else {
         lastXValue = xi
