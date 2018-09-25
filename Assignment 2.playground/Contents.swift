@@ -35,17 +35,16 @@ func valueFromIterationFormula(of x: Double) -> Double {
 }
 
 var lastXValue = 0.0
-func run(for xi: Double) {
-    print(xi)
+func run(for xi: Double, iteration: Int) {
+    print()
+    print("Current xi: \(String(format: "%F", xi)), Last value: \(String(format: "%F", lastXValue)), Iteration: \(iteration)")
     if lastXValue.round(toDecimalPlaces: 6) == xi.round(toDecimalPlaces: 6) {
-        print("Done!")
-        print(lastXValue)
-        print(xi)
+        print("Last two values were equal, with rounding! This took \(iteration) iterations.")
         return
     } else {
-        lastXValue = valueFromIterationFormula(of: xi)
-        run(for: lastXValue)
+        lastXValue = xi
+        run(for: valueFromIterationFormula(of: xi), iteration: iteration + 1)
     }
 }
 
-run(for: valueFromIterationFormula(of: 1.0)) // x0 = 1
+run(for: valueFromIterationFormula(of: 1.0), iteration: 1) // x0 = 1
