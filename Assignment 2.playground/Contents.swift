@@ -5,7 +5,6 @@
 
 import Foundation
 
-
 // Create a "to the power" operator.
 precedencegroup PowerPrecedence { higherThan: MultiplicationPrecedence }
 infix operator ^^ : PowerPrecedence
