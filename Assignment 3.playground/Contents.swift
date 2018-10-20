@@ -41,12 +41,16 @@ func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
 let problemOne = [-0.02, 0.1, -0.2, 1.66]
 let problemTwo = [-0.04, 0.14, -0.16, 2.08]
 
-evaluteP(x: 4.0, coefficients: problemOne)
-evaluatePPrime(x: 4.0, coefficients: problemOne)
-integral(left: 1.0, right: 4.0, coefficients: problemOne)
-evaluteP(x: 5.5, coefficients: problemOne)
+print("Problen #1:")
+print("a. P(4) =                         \(evaluteP(x: 4.0, coefficients: problemOne))")
+print("b. P'(4) =                        \(evaluatePPrime(x: 4.0, coefficients: problemOne))")
+print("c. Integral of P(x) over [1, 4] = \(integral(left: 1.0, right: 4.0, coefficients: problemOne))")
+print("d. P(5.5) =                       \(evaluteP(x: 5.5, coefficients: problemOne))")
+print()
 
-evaluteP(x: 3.0, coefficients: problemTwo)
-evaluatePPrime(x: 3.0, coefficients: problemTwo)
-integral(left: 0, right: 3, coefficients: problemTwo)
-evaluteP(x: 4.5, coefficients: problemTwo)
+print("Problen #2:")
+print("a. P(3) =                         \(evaluteP(x: 3.0, coefficients: problemTwo))")
+print("b. P'(3) =                        \(evaluatePPrime(x: 3.0, coefficients: problemTwo))")
+print("c. Integral of P(x) over [0, 3] = \(integral(left: 0, right: 3, coefficients: problemTwo))")
+print("d. P(4.5) =                       \(evaluteP(x: 4.5, coefficients: problemTwo))")
+print()
