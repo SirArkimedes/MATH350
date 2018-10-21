@@ -5,6 +5,7 @@
 
 import Foundation
 
+// P(x)
 func evaluteP(x: Double, coefficients: [Double]) -> Double {
     var value = 0.0
     for (i, coefficient) in coefficients.enumerated() {
@@ -14,6 +15,7 @@ func evaluteP(x: Double, coefficients: [Double]) -> Double {
     return value
 }
 
+// P'(x)
 func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
     var value = 0.0
     for (i, coefficient) in coefficients.enumerated() {
@@ -25,7 +27,10 @@ func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
     return value
 }
 
+// Integral of P(x) over left and right interval.
 func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
+    // Define a function that can be used twice to calculate the integral, given x.
+    // Using the above-passed coefficients.
     func integrate(x: Double) -> Double {
         var value = 0.0
         for (i, coefficient) in coefficients.enumerated() {
@@ -35,6 +40,7 @@ func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
         return value
     }
 
+    // Uses the locally defined fumction.
     return integrate(x: left) - integrate(x: right)
 }
 
