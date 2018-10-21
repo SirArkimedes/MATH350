@@ -14,6 +14,14 @@ func evaluteP(x: Double, coefficients: [Double]) -> Double {
     }
     return value
 }
+func theirP(x: Double, coefficients: [Double]) -> Double {
+    var b = Array(coefficients)
+    for i in 0...coefficients.count - 2 {
+        print("\(coefficients[i + 1]) + \(b[i]) * \(x)")
+        b[i + 1] = coefficients[i + 1] + b[i] * x
+    }
+    return b[coefficients.count - 1]
+}
 
 // P'(x)
 func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
@@ -44,9 +52,11 @@ func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
     return integrate(x: left) - integrate(x: right)
 }
 
+let problemExample = [-0.02, 0.2, -0.4, 1.28]
 let problemOne = [-0.02, 0.1, -0.2, 1.66]
 let problemTwo = [-0.04, 0.14, -0.16, 2.08]
 
+theirP(x: 4.0, coefficients: problemExample)
 print("Problen #1:")
 print("a. P(4) =                         \(evaluteP(x: 4.0, coefficients: problemOne))")
 print("b. P'(4) =                        \(evaluatePPrime(x: 4.0, coefficients: problemOne))")
