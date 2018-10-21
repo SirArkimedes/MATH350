@@ -7,7 +7,7 @@ import Foundation
 
 // P(x)
 func evaluteP(x: Double, coefficients: [Double]) -> Double {
-    var b = Array(coefficients)
+    var b = Array(coefficients) // Copy the array by value
     for i in 0...coefficients.count - 2 { // Swift, this language, can't go down, only up in iterations.
         let k = coefficients.count - 2 - i
         b[k] = coefficients[k] + b[k + 1] * x
@@ -18,7 +18,7 @@ func evaluteP(x: Double, coefficients: [Double]) -> Double {
 
 // P'(x)
 func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
-    var d = Array(coefficients)
+    var d = Array(coefficients) // Copy the array by value
     d[d.count - 2] = Double(d.count - 1) * d[d.count - 1]
 
     for i in 0...coefficients.count - 3 { // Swift, this language, can't go down, only up in iterations.
@@ -31,17 +31,17 @@ func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
 
 // Integral of P(x) over left and right interval.
 func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
-    // Define a function that can be used twice to calculate the integral, given x.
-    // Using the above-passed coefficients.
+    // Define a function that can be used twice to calculate the integral, given x. Using the above-passed coefficients.
     func integrate(x: Double) -> Double {
-        var b = Array(coefficients)
+        var b = Array(coefficients) // Copy the array by value
         b.insert(b[b.count - 1] / 4.0, at: b.count) // Insert this since the algorithm uses `N` slots.
 
         for i in 0...coefficients.count - 1 { // Swift, this language, can't go down, only up in iterations.
             let k = b.count - 2 - i
-            if k > 0 {
+
+            if k > 0 { // coefficients[0 - 1] is out of bounds, so do this check instead.
                 b[k] = coefficients[k - 1] / Double(k) + b[k + 1] * x
-            } else { // coefficients[0 - 1] is out of bounds, so do this check instead.
+            } else {
                 b[k] = b[k + 1] * x
             }
         }
