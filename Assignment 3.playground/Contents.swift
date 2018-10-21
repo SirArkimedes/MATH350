@@ -12,6 +12,7 @@ func evaluteP(x: Double, coefficients: [Double]) -> Double {
         let k = coefficients.count - 2 - i
         b[k] = coefficients[k] + b[k + 1] * x
     }
+
     return b[0]
 }
 
@@ -19,10 +20,12 @@ func evaluteP(x: Double, coefficients: [Double]) -> Double {
 func evaluatePPrime(x: Double, coefficients: [Double]) -> Double {
     var d = Array(coefficients)
     d[d.count - 2] = Double(d.count - 1) * d[d.count - 1]
+
     for i in 0...coefficients.count - 3 { // Swift, this language, can't go down, only up in iterations.
         let k = coefficients.count - 2 - i
         d[k - 1] = Double(k) * coefficients[k] + d[k] * x
     }
+
     return d[0]
 }
 
@@ -32,15 +35,17 @@ func integral(left: Double, right: Double, coefficients: [Double]) -> Double {
     // Using the above-passed coefficients.
     func integrate(x: Double) -> Double {
         var b = Array(coefficients)
-        b.insert(b[b.count - 1] / 4.0, at: b.count)
+        b.insert(b[b.count - 1] / 4.0, at: b.count) // Insert this since the algorithm uses `N` slots.
+
         for i in 0...coefficients.count - 1 { // Swift, this language, can't go down, only up in iterations.
             let k = b.count - 2 - i
             if k > 0 {
                 b[k] = coefficients[k - 1] / Double(k) + b[k + 1] * x
-            } else {
+            } else { // coefficients[0 - 1] is out of bounds, so do this check instead.
                 b[k] = b[k + 1] * x
             }
         }
+
         return b[0]
     }
 
