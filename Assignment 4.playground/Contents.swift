@@ -10,13 +10,11 @@ struct Point {
     let y: Double
 }
 
-let points = [Point(x: 0, y: 2),
-              Point(x: 1, y: 5.4375),
-              Point(x: 2.5, y: 7.3516),
-              Point(x: 3, y: 7.5625),
-              Point(x: 4.5, y: 8.4453),
-              Point(x: 5, y: 9.1875),
-              Point(x: 6, y: 12)]
+let points = [Point(x: 0.0, y: -6.0),
+              Point(x: 0.1, y: -5.89483),
+              Point(x: 0.3, y: -5.65014),
+              Point(x: 0.6, y: -5.17788),
+              Point(x: 1.0, y: -4.28172)]
 
 
 func lagrangeApproximate(x: Double) -> Double {
