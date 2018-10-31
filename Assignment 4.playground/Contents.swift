@@ -24,7 +24,7 @@ extension Double {
 }
 
 
-func lagrange() {
+func lagrange() -> String {
     func topOfMultiplier(for position: Int) -> String {
         var top = ""
 
@@ -35,53 +35,28 @@ func lagrange() {
         }
         return top
     }
-    func bottomOfMultiplier(for position: Int) -> String {
-        var bottom = ""
+    func bottomOfMultiplier(for position: Int) -> Double {
+        var bottom = 1.0
         let pointAtPosition = points[position]
 
         for (i, point) in points.enumerated() {
             if i != position {
-                bottom += "(\(pointAtPosition.x) - \(point.x))"
+                bottom *= pointAtPosition.x - point.x
             }
         }
         return bottom
     }
 
-    // Top
-    for i in 0...points.count - 1 {
-        if i == 0 {
-            print("          ", terminator: "")
-        } else {
-            print("             ", terminator: "")
-        }
-        print(topOfMultiplier(for: i).padding(toLength: bottomOfMultiplier(for: i).count, withPad: " ", startingAt: 0), terminator: "")
-    }
-    print()
-
-    // Middle
+    var value = ""
     for (i, point) in points.enumerated() {
-        let multiplier = String(format: "%.6f ", point.y)
-        print(multiplier, terminator: "")
-        for _ in 1...bottomOfMultiplier(for: i).count {
-            print("-", terminator: "")
-        }
-
-        if i != points.count - 1 {
-            print(" + ", terminator: "")
-        }
-    }
-    print()
-
-    // Top
-    for i in 0...points.count - 1 {
-        if i == 0 {
-            print("          ", terminator: "")
+        if i == points.count - 1 {
+            value += "(\(point.y)) [\(topOfMultiplier(for: i)) / \(bottomOfMultiplier(for: i))]"
         } else {
-            print("             ", terminator: "")
+            value += "(\(point.y)) [\(topOfMultiplier(for: i)) / \(bottomOfMultiplier(for: i))] + "
         }
-        print(bottomOfMultiplier(for: i), terminator: "")
     }
-    print()
+
+    return value
 }
 
 func newton(of degree: Int) -> String {
@@ -116,8 +91,7 @@ func newton(of degree: Int) -> String {
 }
 
 print("Lagrange's polynomial:")
-print("P4(x) =")
-lagrange()
+print("P4(x) = " + lagrange())
 print()
 print("Newton's polynomial:")
 print("P4(x) = " + newton(of: 4))
