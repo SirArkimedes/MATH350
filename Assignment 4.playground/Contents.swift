@@ -73,7 +73,7 @@ func newton(of degree: Int) -> String {
         }
     }
 
-    if degree - 1 == 1 {
+    if degree == 1 {
         return "\(points[0].y) + \(dividedDifference(for: [0, 1]))(x - \(points[0].x))"
     } else {
         var multiple = ""
