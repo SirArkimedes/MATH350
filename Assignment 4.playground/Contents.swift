@@ -39,7 +39,7 @@ func lagrangeApproximate(x: Double) -> Double {
     return value
 }
 
-func newtonApproximate(x: Double, of degree: Int) -> Double {
+func newton(of degree: Int) -> String {
     func dividedDifference(for values: [Int]) -> Double {
         if values.count == 1 {
             return points[values[0]].y
@@ -54,23 +54,24 @@ func newtonApproximate(x: Double, of degree: Int) -> Double {
     }
 
     if degree - 1 == 1 {
-        return points[0].y + dividedDifference(for: [0, 1]) * (x - points[0].x)
+        return "\(points[0].y) + \(dividedDifference(for: [0, 1]))(x - \(points[0].x))"
     } else {
-        var multiple = 1.0
+        var multiple = ""
         for i in 0...degree - 2 {
-            multiple *= x - points[i].x
+            multiple += "(x - \(points[i].x))"
         }
 
         var ddValues = [Int]()
         for i in 0...degree - 1 {
             ddValues.append(i)
         }
-        print(ddValues)
-        print(multiple)
 
-        return newtonApproximate(x: x, of: degree - 1) + dividedDifference(for: ddValues) * multiple
+        return "\(newton(of: degree - 1)) + \(dividedDifference(for: ddValues))\(multiple)"
     }
 }
 
+print("Lagrange's polynomial:")
 lagrangeApproximate(x: 4)
-newtonApproximate(x: 4, of: 6)
+print()
+print("Newton's polynomial:")
+print("P4(x) = " + newton(of: 4))
