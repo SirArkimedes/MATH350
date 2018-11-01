@@ -16,13 +16,6 @@ let points = [Point(x: 0.0, y: -6.0),
               Point(x: 0.6, y: -5.17788),
               Point(x: 1.0, y: -4.28172)]
 
-// Extend double to handle rounding.
-extension Double {
-    func round(toPlaces: Int) -> Double {
-        return (self * pow(10.0, Double(toPlaces))).rounded() / pow(10.0, Double(toPlaces))
-    }
-}
-
 
 func lagrange() -> String {
     func topOfMultiplier(for position: Int) -> String {
