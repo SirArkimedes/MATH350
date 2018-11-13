@@ -27,10 +27,6 @@ func formulaTen(_ k: Double) -> Double {
     return (-f(x: xo + 2 * h(k)) + 8 * f(x: xo + h(k)) - 8 * f(x: xo - h(k)) + f(x: xo - 2 * h(k))) / (12 * h(k))
 }
 
-var formulaTwoValues = [Double]()
-var formulaThreeValues = [Double]()
-var formulaTenValues = [Double]()
-
 func run(with formula: ((Double) -> Double), arrayToAppend: inout [Double]) -> Double {
     var previousApproximation = 2.0
     var currentApproximation = 0.0
@@ -43,16 +39,22 @@ func run(with formula: ((Double) -> Double), arrayToAppend: inout [Double]) -> D
         nextApproximation = formula(k + 2)
         k += 1
         
-        arrayToAppend.append(currentApproximation)
+        arrayToAppend.append(previousApproximation)
     }
     
     return k
 }
 
-run(with: formulaTwo(_:), arrayToAppend: &formulaTwoValues)
-run(with: formulaThree(_:), arrayToAppend: &formulaThreeValues)
-run(with: formulaTen(_:), arrayToAppend: &formulaTenValues)
+var formulaTwoValues = [Double]()
+var formulaThreeValues = [Double]()
+var formulaTenValues = [Double]()
+let formulaTwoK = run(with: formulaTwo(_:), arrayToAppend: &formulaTwoValues)
+let formulaThreeK = run(with: formulaThree(_:), arrayToAppend: &formulaThreeValues)
+let formulaTenK = run(with: formulaTen(_:), arrayToAppend: &formulaTenValues)
 
+for i in 1...Int(max(formulaTwoK, formulaThreeK, formulaTenK)) {
+    print(" h^\(i) | \(formulaTwoValues.count > i ? String(format: "%.13f", formulaTwoValues[i - 1]) : String(format: "%.13f", 0)) | ")
+}
 //String(format: "%.13f", currentApproximation)
 //print(previousApproximation)
 //print(currentApproximation)
