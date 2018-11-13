@@ -5,12 +5,36 @@
 
 import Foundation
 
+///////////////////////////////////////////////////
+// Helpers that don't have to deal with solution //
+///////////////////////////////////////////////////
+
+// Extend string to do left padding.
+extension String { // Retrieved from: https://stackoverflow.com/a/39215372/4447090
+    func leftPadding(toLength: Int, withPad character: Character) -> String {
+        let stringLength = self.count
+        if stringLength < toLength {
+            return String(repeatElement(character, count: toLength - stringLength)) + self
+        } else {
+            return String(self.suffix(toLength))
+        }
+    }
+}
+
+///////////////////////////////////////////////////
+// Solution methods                              //
+///////////////////////////////////////////////////
+
 func h(_ k: Double) -> Double {
     return pow(10.0, -k)
 }
 
 func f(x: Double) -> Double {
     return sin(pow(x, 3) - 7 * pow(x, 2) + 6 * x + 8)
+}
+
+func derivateOfF(x: Double) -> Double {
+    return cos(pow(x, 3) - 7 * pow(x, 2) + 6 * x + 8) * (3 * pow(x, 2) - 14 * x + 6)
 }
 
 let xo = (1.0 - sqrt(5)) / 3.0
@@ -27,7 +51,7 @@ func formulaTen(_ k: Double) -> Double {
     return (-f(x: xo + 2 * h(k)) + 8 * f(x: xo + h(k)) - 8 * f(x: xo - h(k)) + f(x: xo - 2 * h(k))) / (12 * h(k))
 }
 
-func run(with formula: ((Double) -> Double), arrayToAppend: inout [Double]) -> Double {
+func run(with formula: ((Double) -> Double)) -> Double {
     var previousApproximation = 2.0
     var currentApproximation = 0.0
     var nextApproximation = 1.0
@@ -38,32 +62,31 @@ func run(with formula: ((Double) -> Double), arrayToAppend: inout [Double]) -> D
         currentApproximation = formula(k + 1)
         nextApproximation = formula(k + 2)
         k += 1
-        
-        arrayToAppend.append(previousApproximation)
     }
     
     return k
 }
 
-var formulaTwoValues = [Double]()
-var formulaThreeValues = [Double]()
-var formulaTenValues = [Double]()
-let formulaTwoK = run(with: formulaTwo(_:), arrayToAppend: &formulaTwoValues)
-let formulaThreeK = run(with: formulaThree(_:), arrayToAppend: &formulaThreeValues)
-let formulaTenK = run(with: formulaTen(_:), arrayToAppend: &formulaTenValues)
+///////////////////////////////////////////////////
+// Running and printing the above methods        //
+///////////////////////////////////////////////////
 
-for i in 1...Int(max(formulaTwoK, formulaThreeK, formulaTenK)) {
-    print(" h^\(i) | \(formulaTwoValues.count > i ? String(format: "%.13f", formulaTwoValues[i - 1]) : String(format: "%.13f", 0)) | ")
+let formulaTwoK = run(with: formulaTwo(_:))
+let formulaThreeK = run(with: formulaThree(_:))
+let formulaTenK = run(with: formulaTen(_:))
+
+for i in 1...Int(max(formulaTwoK, formulaThreeK, formulaTenK)) + 1 {
+    let paddingLength = 16
+    let h = "10^\(i)".padding(toLength: 5, withPad: " ", startingAt: 0)
+
+    let formulaTwoString = String(format: "%.13f", formulaTwo(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+    let errorTwo = String(format: "%.13f", derivateOfF(x: xo) - formulaTwo(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+
+    let formulaThreeString = String(format: "%.13f", formulaThree(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+    let errorThree = String(format: "%.13f", derivateOfF(x: xo) - formulaThree(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+
+    let formulaTenString = String(format: "%.13f", formulaTen(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+    let errorTen = String(format: "%.13f", derivateOfF(x: xo) - formulaTen(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
+
+    print("| \(h) | \(formulaTwoString) | \(errorTwo) || \(formulaThreeString) | \(errorThree) || \(formulaTenString) | \(errorTen) ||")
 }
-//String(format: "%.13f", currentApproximation)
-//print(previousApproximation)
-//print(currentApproximation)
-//print(k)
-//print(nextApproximation)
-
-//for k in 1...10 {
-//    print("Two: \(formulaTwo(Double(k)))")
-//    print("Three: \(formulaThree(Double(k)))")
-//    print("Ten: \(formulaTen(Double(k)))")
-//    print()
-//}
