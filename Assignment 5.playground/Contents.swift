@@ -56,17 +56,12 @@ func run(with formula: ((Double) -> Double)) -> Double {
     var currentApproximation = 0.0
     var nextApproximation = 1.0
     
-    var k = 0.0
+    var k = 1.0
     while (nextApproximation - currentApproximation).magnitude < (currentApproximation - previousApproximation).magnitude {
-        k += 1
         previousApproximation = formula(k)
         currentApproximation = formula(k + 1)
         nextApproximation = formula(k + 2)
-
-
-        print((nextApproximation - currentApproximation).magnitude)
-        print((currentApproximation - previousApproximation).magnitude)
-        print((nextApproximation - currentApproximation).magnitude < (currentApproximation - previousApproximation).magnitude)
+        k += 1
     }
     
     return k
