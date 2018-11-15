@@ -26,38 +26,52 @@ extension String { // Retrieved from: https://stackoverflow.com/a/39215372/44470
 // Solution methods                              //
 ///////////////////////////////////////////////////
 
+// Easy access to h calculations.
 func h(_ k: Double) -> Double {
     return pow(10.0, -k)
 }
 
+let xo = (1.0 - sqrt(5.0)) / 3.0
+
+// f(x)
 func f(x: Double) -> Double {
     return sin(pow(x, 3) - 7 * pow(x, 2) + 6 * x + 8)
 }
 
+// f'(x), for error checking.
 func derivateOfF(x: Double) -> Double {
     return cos(pow(x, 3) - 7 * pow(x, 2) + 6 * x + 8) * (3 * pow(x, 2) - 14 * x + 6)
 }
 
-let xo = (1.0 - sqrt(5.0)) / 3.0
-
+// Formula (2) using a k input.
 func formulaTwo(_ k: Double) -> Double {
     return (f(x: xo + h(k)) - f(x: xo)) / h(k)
 }
 
+// Formula (3) using a k input.
 func formulaThree(_ k: Double) -> Double {
     return (f(x: xo + h(k)) - f(x: xo - h(k))) / (2 * h(k))
 }
 
+// Formula (10) using a k input.
 func formulaTen(_ k: Double) -> Double {
     return (-f(x: xo + 2 * h(k)) + 8 * f(x: xo + h(k)) - 8 * f(x: xo - h(k)) + f(x: xo - 2 * h(k))) / (12 * h(k))
 }
 
+///////////////////////////////////////////////////
+// Running and printing the above methods        //
+///////////////////////////////////////////////////
+
+// This function does the check for |Dn+1 - Dn| >= |Dn - Dn-1|.
+// Gets passed a `formula` method, so I don't have to write three different
+// functions that have only the formula as their difference.
 func run(with formula: ((Double) -> Double)) -> Double {
     var previousApproximation = 2.0
     var currentApproximation = 0.0
     var nextApproximation = 1.0
     
     var k = 1.0
+    // The `.magnitude` is an absolute value equivalent. Swift doesn't have an absolute value for Doubles.
     while (nextApproximation - currentApproximation).magnitude < (currentApproximation - previousApproximation).magnitude {
         previousApproximation = formula(k)
         currentApproximation = formula(k + 1)
@@ -67,10 +81,6 @@ func run(with formula: ((Double) -> Double)) -> Double {
     
     return k
 }
-
-///////////////////////////////////////////////////
-// Running and printing the above methods        //
-///////////////////////////////////////////////////
 
 let formulaTwoK = run(with: formulaTwo(_:))
 let formulaThreeK = run(with: formulaThree(_:))
@@ -86,10 +96,12 @@ print("|  Step  || Approximation by |   Error using    || Approximation by |   E
 print("|  Size  ||    formula (2)   |   formula (2)    ||    formula (3)   |   formula (3)    ||   formula (10)   |   formula (10)   ||")
 print(separator)
 
+// Figure out the size of the table using the `max(...)` function.
 for i in 1...Int(max(formulaTwoK, formulaThreeK, formulaTenK)) + 1 {
     let paddingLength = 16
     let h = "10^-\(i)".padding(toLength: 6, withPad: " ", startingAt: 0)
 
+    // Error = Exact derivative - formula approximation
     let formulaTwoString = String(format: "%.13f", formulaTwo(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
     let errorTwo = String(format: "%.13f", derivateOfF(x: xo) - formulaTwo(Double(i))).leftPadding(toLength: paddingLength, withPad: " ")
 
