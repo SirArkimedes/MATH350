@@ -11,8 +11,9 @@ Grades for assignments included in this repository are (Does not include final g
 | Assignment    | Grade Received       |
 | ------------- |:--------------------:|
 | 1             | 25/25                |
-| 2             | 0/0                  |
-| 3             | 0/0                  |
-| 4             | 0/0                  |
-| 5             | 0/0                  |
+| 2             | 25/25                |
+| 3             | 25/25                |
+| 4             | 25/25                |
+| 5             | 25/25                |
+| 6             | 0/0                  |
 | Total         | 0/0                  |
