@@ -9,6 +9,7 @@ import Foundation
 ///////////////////////////////////////////////////
 // Helpers that don't have to deal with solution //
 ///////////////////////////////////////////////////
+
 // Extend string to do left padding.
 extension String { // Retrieved from: https://stackoverflow.com/a/39215372/4447090
     func leftPadding(toLength: Int, withPad character: Character) -> String {
@@ -20,6 +21,10 @@ extension String { // Retrieved from: https://stackoverflow.com/a/39215372/44470
         }
     }
 }
+
+///////////////////////////////////////////////////
+// Solution structures                           //
+///////////////////////////////////////////////////
 
 struct Interval {
     var a: Double
@@ -58,7 +63,7 @@ func simpsons(m: Int, interval: Interval) -> Double {
         rightSum += f(xk)
     }
 
-    return (h / 3) * (f(interval.a) + f(interval.b)) + (2 * h / 3) * leftSum + (4 * h / 3) * leftSum
+    return (h / 3) * (f(interval.a) + f(interval.b)) + (2 * h / 3) * leftSum + (4 * h / 3) * rightSum
 }
 
 ///////////////////////////////////////////////////
