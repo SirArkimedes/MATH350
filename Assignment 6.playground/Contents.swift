@@ -7,22 +7,6 @@
 import Foundation
 
 ///////////////////////////////////////////////////
-// Helpers that don't have to deal with solution //
-///////////////////////////////////////////////////
-
-// Extend string to do left padding.
-extension String { // Retrieved from: https://stackoverflow.com/a/39215372/4447090
-    func leftPadding(toLength: Int, withPad character: Character) -> String {
-        let stringLength = self.count
-        if stringLength < toLength {
-            return String(repeatElement(character, count: toLength - stringLength)) + self
-        } else {
-            return String(self.suffix(toLength))
-        }
-    }
-}
-
-///////////////////////////////////////////////////
 // Solution structures                           //
 ///////////////////////////////////////////////////
 
@@ -75,7 +59,7 @@ let paddingLength = 11
 let separator = "||——————||—————————————|—————————————||——————————————————||"
 
 print(separator)
-print("||   M  ||    T(f,h)   |    S(f,h)   ||     Abs Error    ||")
+print("||  M   ||    T(f,h)   |    S(f,h)   ||     Abs Error    ||")
 print(separator)
 
 for i in 1...5 {
@@ -83,7 +67,7 @@ for i in 1...5 {
     let t = trapezoidal(m: m, interval: interval)
     let s = simpsons(m: m, interval: interval)
 
-    let mString = "\(m)".leftPadding(toLength: 2, withPad: " ")
+    let mString = "\(m)".padding(toLength: 2, withPad: " ", startingAt: 0)
     let tString = String(format: "%.9f", t)
     let sString = String(format: "%.9f", s)
 
