@@ -6,6 +6,21 @@
 
 import Foundation
 
+///////////////////////////////////////////////////
+// Helpers that don't have to deal with solution //
+///////////////////////////////////////////////////
+// Extend string to do left padding.
+extension String { // Retrieved from: https://stackoverflow.com/a/39215372/4447090
+    func leftPadding(toLength: Int, withPad character: Character) -> String {
+        let stringLength = self.count
+        if stringLength < toLength {
+            return String(repeatElement(character, count: toLength - stringLength)) + self
+        } else {
+            return String(self.suffix(toLength))
+        }
+    }
+}
+
 struct Interval {
     var a: Double
     var b: Double
@@ -46,14 +61,29 @@ func simpsons(m: Int, interval: Interval) -> Double {
     return (h / 3) * (f(interval.a) + f(interval.b)) + (2 * h / 3) * leftSum + (4 * h / 3) * leftSum
 }
 
+///////////////////////////////////////////////////
+// Running and printing the above methods        //
+///////////////////////////////////////////////////
+
 let interval = Interval(a: 0, b: Double.pi / 2)
-print(trapezoidal(m: 2, interval: interval))
-print(trapezoidal(m: 4, interval: interval))
-print(trapezoidal(m: 8, interval: interval))
-print(trapezoidal(m: 32, interval: interval))
+let paddingLength = 11
+let separator = "||——————||—————————————|—————————————||——————————————————||"
 
-print()
+print(separator)
+print("||   M  ||    T(f,h)   |    S(f,h)   ||     Abs Error    ||")
+print(separator)
 
-print(simpsons(m: 2, interval: interval))
-print(simpsons(m: 32, interval: interval))
-print(simpsons(m: 128, interval: interval))
+for i in 1...5 {
+    let m = Int(pow(2.0, Double(i)))
+    let t = trapezoidal(m: m, interval: interval)
+    let s = simpsons(m: m, interval: interval)
+
+    let mString = "\(m)".leftPadding(toLength: 2, withPad: " ")
+    let tString = String(format: "%.9f", t)
+    let sString = String(format: "%.9f", s)
+
+    let absError = ""
+
+    print("||  \(mString)  || \(tString) | \(sString) || \(absError) ||")
+}
+print(separator)
