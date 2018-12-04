@@ -1,8 +1,8 @@
-/***********************************************************/
+//*********************************************************//
 // Andrew Robinson                                         //
 // Introduction to Numerical Analysis - MATH 350           //
 // Easier to view: https://github.com/SirArkimedes/MATH350 //
-/***********************************************************/
+//*********************************************************//
 
 import Foundation
 
@@ -10,6 +10,7 @@ import Foundation
 // Solution structures                           //
 ///////////////////////////////////////////////////
 
+// Use this to handle the interval being passed around.
 struct Interval {
     var a: Double
     var b: Double
@@ -19,6 +20,7 @@ func f(_ x: Double) -> Double {
     return (pow(x, 2) + x + 1) * cos(x)
 }
 
+// Composite trapezoidal approximation function.
 func trapezoidal(m: Int, interval: Interval) -> Double {
     let h = (interval.b - interval.a) / Double(m)
 
@@ -31,6 +33,7 @@ func trapezoidal(m: Int, interval: Interval) -> Double {
     return (h / 2) * (f(interval.a) + f(interval.b)) + h * sum
 }
 
+// Composite Simpson's approximation function.
 func simpsons(m: Int, interval: Interval) -> Double {
     let h = (interval.b - interval.a) / Double(2 * m)
 
@@ -79,3 +82,16 @@ for i in 1...5 {
     print("||  \(mString)  || \(tString) | \(sString) || \(absErrorTString) | \(absErrorSString) ||")
 }
 print(separator)
+
+/* Output:
+ ||——————||—————————————|—————————————||—————————————|—————————————||
+ ||  M   ||    T(f,h)   |    S(f,h)   ||  Abs Error  |  Abs Error  ||
+ ||      ||             |             ||  of T(f,h)  |  of S(f,h)  ||
+ ||——————||—————————————|—————————————||—————————————|—————————————||
+ ||  2   || 1.726812657 | 2.038441336 || 0.311384770 | 0.000243909 ||
+ ||  4   || 1.960534167 | 2.038213875 || 0.077663261 | 0.000016448 ||
+ ||  8   || 2.018793948 | 2.038198473 || 0.019403479 | 0.000001046 ||
+ ||  16  || 2.033347342 | 2.038197493 || 0.004850085 | 0.000000066 ||
+ ||  32  || 2.036984955 | 2.038197431 || 0.001212472 | 0.000000004 ||
+ ||——————||—————————————|—————————————||—————————————|—————————————||
+ */
