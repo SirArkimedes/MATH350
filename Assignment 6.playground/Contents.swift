@@ -73,8 +73,6 @@ for i in 1...5 {
     let sString = String(format: "%.9f", s)
 
     let bestIntegral = 2.0381974270672
-    let absErrorS = bestIntegral - s
-
     let absErrorTString = String(format: "%.9f", (bestIntegral - t).magnitude)
     let absErrorSString = String(format: "%.9f", (bestIntegral - s).magnitude)
 
