@@ -42,7 +42,7 @@ func simpsons(m: Int, interval: Interval) -> Double {
         leftSum += f(xk)
     }
 
-    for k in 1...(m - 1) {
+    for k in 1...m {
         let xk = interval.a + Double(2 * k - 1) * h
         rightSum += f(xk)
     }
@@ -56,10 +56,11 @@ func simpsons(m: Int, interval: Interval) -> Double {
 
 let interval = Interval(a: 0, b: Double.pi / 2)
 let paddingLength = 11
-let separator = "||——————||—————————————|—————————————||——————————————————||"
+let separator = "||——————||—————————————|—————————————||—————————————|—————————————||"
 
 print(separator)
-print("||  M   ||    T(f,h)   |    S(f,h)   ||     Abs Error    ||")
+print("||  M   ||    T(f,h)   |    S(f,h)   ||  Abs Error  |  Abs Error  ||")
+print("||      ||             |             ||  of T(f,h)  |  of S(f,h)  ||")
 print(separator)
 
 for i in 1...5 {
@@ -71,8 +72,12 @@ for i in 1...5 {
     let tString = String(format: "%.9f", t)
     let sString = String(format: "%.9f", s)
 
-    let absError = ""
+    let bestIntegral = 2.0381974270672
+    let absErrorS = bestIntegral - s
 
-    print("||  \(mString)  || \(tString) | \(sString) || \(absError) ||")
+    let absErrorTString = String(format: "%.9f", (bestIntegral - t).magnitude)
+    let absErrorSString = String(format: "%.9f", (bestIntegral - s).magnitude)
+
+    print("||  \(mString)  || \(tString) | \(sString) || \(absErrorTString) | \(absErrorSString) ||")
 }
 print(separator)
